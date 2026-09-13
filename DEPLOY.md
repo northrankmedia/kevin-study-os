@@ -124,9 +124,15 @@ placeholder list this mirrors.
   again inside the `build` script above — redundant but harmless, and
   means `npm run build` alone reproduces the Vercel build from a clean
   clone).
-- **Node.js Version:** 22.x (pinned via `"engines"` in the repo-root
-  `package.json`; override in Project Settings → General if you'd rather
-  pin a different supported version).
+- **Node.js Version:** 24.x (pinned via `"engines"` in the repo-root
+  `package.json`; must be 22.12+ — `shared/contract.js` relies on Node's
+  synchronous `require()` of an ES module, which isn't supported below that.
+  Vercel's dashboard "Node.js Version" project setting is a SEPARATE control
+  from this `engines` field and governs the actual deployed Function
+  runtime — confirm it's also set to 24.x (or at least 22.x) under Project
+  Settings → General, don't rely on `engines` alone. Node 20 predates
+  `require(esm)` entirely and is also being deprecated on Vercel October 1,
+  2026 — see https://vercel.com/changelog/node-js-20-is-being-deprecated.
 
 ## First real deploy — step by step
 
