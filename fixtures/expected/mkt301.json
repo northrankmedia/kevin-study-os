@@ -1,0 +1,195 @@
+{
+  "course": {
+    "code": "MKT 301",
+    "name": "Principles of Marketing",
+    "instructor_name": "Kristen Ryan",
+    "instructor_email": "ksryan@sbu.edu",
+    "grading_scheme": "points",
+    "points_total_stated": 1000,
+    "needs_review": false,
+    "review_reason": null
+  },
+  "grading_components": [
+    { "title": "Weekly Engagement Activities (WEA)", "parent_title": null, "weight_percent": null, "points_possible": 250, "expected_count": 10, "count_best_n": null, "drop_lowest_n": null },
+    { "title": "WEA Discussion Boards (participation)", "parent_title": null, "weight_percent": null, "points_possible": 100, "expected_count": 10, "count_best_n": null, "drop_lowest_n": null },
+    { "title": "Exams", "parent_title": null, "weight_percent": null, "points_possible": 300, "expected_count": 3, "count_best_n": null, "drop_lowest_n": null },
+    { "title": "Test 1", "parent_title": "Exams", "weight_percent": null, "points_possible": 100, "expected_count": null, "count_best_n": null, "drop_lowest_n": null },
+    { "title": "Test 2", "parent_title": "Exams", "weight_percent": null, "points_possible": 100, "expected_count": null, "count_best_n": null, "drop_lowest_n": null },
+    { "title": "Test 3", "parent_title": "Exams", "weight_percent": null, "points_possible": 100, "expected_count": null, "count_best_n": null, "drop_lowest_n": null },
+    { "title": "Finding Goldy Project (FG)", "parent_title": null, "weight_percent": null, "points_possible": 250, "expected_count": null, "count_best_n": null, "drop_lowest_n": null },
+    { "title": "FG Presentation", "parent_title": null, "weight_percent": null, "points_possible": 100, "expected_count": null, "count_best_n": null, "drop_lowest_n": null }
+  ],
+  "syllabus_items": [
+    {
+      "title": "Test 1",
+      "item_kind": "exam",
+      "due_start": "2026-09-27", "due_end": "2026-09-27", "due_time": "20:00",
+      "available_from": "2026-09-25T08:00:00", "available_until": "2026-09-27T20:00:00",
+      "date_precision": "exact",
+      "source_text": "Test 1 Opens 9/25 at 8am Closes 9/27 at 8 pm",
+      "source_section": "schedule_table",
+      "points_possible": 100, "is_recurring": false, "expected_count": null
+    },
+    {
+      "title": "Test 2",
+      "item_kind": "exam",
+      "due_start": "2026-11-08", "due_end": "2026-11-08", "due_time": "20:00",
+      "available_from": "2026-11-06T08:00:00", "available_until": "2026-11-08T20:00:00",
+      "date_precision": "exact",
+      "source_text": "Test 2 Opens 11/6 at 8am Closes 11/8 at 8 pm",
+      "source_section": "schedule_table",
+      "points_possible": 100, "is_recurring": false, "expected_count": null
+    },
+    {
+      "title": "Test 3",
+      "item_kind": "exam",
+      "due_start": "2026-12-16", "due_end": "2026-12-16", "due_time": "20:00",
+      "available_from": "2026-12-14T08:00:00", "available_until": "2026-12-16T20:00:00",
+      "date_precision": "exact",
+      "source_text": "Test 3 Opens 12/14 at 8 am Closes 12/16 at 8 pm",
+      "source_section": "schedule_table",
+      "points_possible": 100, "is_recurring": false, "expected_count": null
+    },
+    {
+      "title": "Finding Goldy (FG) Project",
+      "item_kind": "project",
+      "due_start": "2026-11-22", "due_end": "2026-11-22", "due_time": "23:55",
+      "available_from": null, "available_until": null,
+      "date_precision": "exact",
+      "source_text": "FG projects due 11/22 at 11:55 pm",
+      "source_section": "schedule_table",
+      "points_possible": 250, "is_recurring": false, "expected_count": null
+    },
+    {
+      "title": "FG Presentation/Reflection",
+      "item_kind": "presentation",
+      "due_start": "2026-11-24", "due_end": "2026-11-24", "due_time": "23:55",
+      "available_from": null, "available_until": null,
+      "date_precision": "exact",
+      "source_text": "FG Presentations due before 11/24 at 11:55 pm",
+      "source_section": "schedule_table",
+      "points_possible": 100, "is_recurring": false, "expected_count": null
+    },
+    {
+      "title": "Midterm Break",
+      "item_kind": "break",
+      "due_start": "2026-10-12", "due_end": "2026-10-13", "due_time": null,
+      "available_from": null, "available_until": null,
+      "date_precision": "range",
+      "source_text": "MIDTERM BREAK Monday/Tuesday October 12-13",
+      "source_section": "schedule_table",
+      "points_possible": null, "is_recurring": false, "expected_count": null
+    },
+    {
+      "title": "Thanksgiving Break",
+      "item_kind": "break",
+      "due_start": "2026-11-25", "due_end": "2026-11-29", "due_time": null,
+      "available_from": null, "available_until": null,
+      "date_precision": "range",
+      "source_text": "Thanksgiving Break – No Classes November Wed Nov 25- Sun Nov 29",
+      "source_section": "schedule_table",
+      "points_possible": null, "is_recurring": false, "expected_count": null
+    },
+    {
+      "title": "Ansoff WEA",
+      "item_kind": "homework",
+      "due_start": "2026-09-10", "due_end": "2026-09-10", "due_time": null,
+      "available_from": null, "available_until": null,
+      "date_precision": "exact",
+      "source_text": "Ansoff WEA",
+      "source_section": "schedule_table",
+      "points_possible": 25, "is_recurring": false, "expected_count": null
+    },
+    {
+      "title": "Domino's Pizza WEA",
+      "item_kind": "homework",
+      "due_start": "2026-09-17", "due_end": "2026-09-17", "due_time": null,
+      "available_from": null, "available_until": null,
+      "date_precision": "exact",
+      "source_text": "Domino’s Pizza WEA",
+      "source_section": "schedule_table",
+      "points_possible": 25, "is_recurring": false, "expected_count": null
+    },
+    {
+      "title": "Hofstede Assignment WEA",
+      "item_kind": "homework",
+      "due_start": "2026-09-24", "due_end": "2026-09-24", "due_time": null,
+      "available_from": null, "available_until": null,
+      "date_precision": "exact",
+      "source_text": "Ch. 5/Hofstede assignment",
+      "source_section": "schedule_table",
+      "points_possible": 25, "is_recurring": false, "expected_count": null
+    },
+    {
+      "title": "CB College Decision WEA",
+      "item_kind": "homework",
+      "due_start": "2026-10-01", "due_end": "2026-10-01", "due_time": null,
+      "available_from": null, "available_until": null,
+      "date_precision": "exact",
+      "source_text": "CB College decision WEA – 5 step process",
+      "source_section": "schedule_table",
+      "points_possible": 25, "is_recurring": false, "expected_count": null
+    },
+    {
+      "title": "Farmers Only WEA",
+      "item_kind": "homework",
+      "due_start": "2026-10-08", "due_end": "2026-10-08", "due_time": null,
+      "available_from": null, "available_until": null,
+      "date_precision": "exact",
+      "source_text": "Farmers Only WEA",
+      "source_section": "schedule_table",
+      "points_possible": 25, "is_recurring": false, "expected_count": null
+    },
+    {
+      "title": "Domino's Pizza Gets a Makeover WEA",
+      "item_kind": "homework",
+      "due_start": "2026-10-15", "due_end": "2026-10-15", "due_time": null,
+      "available_from": null, "available_until": null,
+      "date_precision": "exact",
+      "source_text": "Domino’s Pizza gets a makeover WEA",
+      "source_section": "schedule_table",
+      "points_possible": 25, "is_recurring": false, "expected_count": null
+    },
+    {
+      "title": "Luxottica WEA",
+      "item_kind": "homework",
+      "due_start": "2026-11-12", "due_end": "2026-11-12", "due_time": null,
+      "available_from": null, "available_until": null,
+      "date_precision": "exact",
+      "source_text": "Luxottica WEA",
+      "source_section": "schedule_table",
+      "points_possible": 25, "is_recurring": false, "expected_count": null
+    },
+    {
+      "title": "Troy Library/McDonalds Promotional Mix WEA",
+      "item_kind": "homework",
+      "due_start": "2026-12-03", "due_end": "2026-12-03", "due_time": null,
+      "available_from": null, "available_until": null,
+      "date_precision": "exact",
+      "source_text": "Promotional Mix/Troy Library",
+      "source_section": "schedule_table",
+      "points_possible": 25, "is_recurring": false, "expected_count": null
+    },
+    {
+      "title": "Pricing Problems and NPR Monoprice WEA",
+      "item_kind": "homework",
+      "due_start": "2026-12-10", "due_end": "2026-12-10", "due_time": null,
+      "available_from": null, "available_until": null,
+      "date_precision": "exact",
+      "source_text": "Pricing Problems and NPR Monoprice WEA",
+      "source_section": "schedule_table",
+      "points_possible": 25, "is_recurring": false, "expected_count": null
+    },
+    {
+      "title": "WEA Discussion Board Response",
+      "item_kind": "discussion",
+      "due_start": null, "due_end": null, "due_time": "23:55",
+      "available_from": null, "available_until": null,
+      "date_precision": "none",
+      "source_text": "Responses to Discussion board due by 11:55 pm",
+      "source_section": "schedule_table",
+      "points_possible": null, "is_recurring": true, "expected_count": 10
+    }
+  ],
+  "term_mismatch": false
+}

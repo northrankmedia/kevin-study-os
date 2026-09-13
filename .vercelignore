@@ -1,0 +1,18 @@
+# Never needed at runtime by the deployed api/src/index.js function, and
+# never required by any file it imports — safe to exclude from the
+# deployment bundle entirely (unlike api/src/**, which must stay present
+# for the app to run — see DEPLOY.md's "Known Vercel /api quirk" section).
+api/test/
+api/vitest.config.js
+web/src/**/*.test.jsx
+web/src/**/*.test.js
+
+# Local dev fixtures/tooling — not read by anything under api/src or web/src
+# at runtime.
+fixtures/
+scripts/
+
+# Never commit real env values, and never let dotenv's local file even
+# exist in a deployed bundle (Vercel injects real env vars directly into
+# process.env from the project's dashboard settings instead).
+.env.local

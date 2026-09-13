@@ -1,0 +1,24 @@
+{
+  "name": "kevin-study-os",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "api",
+    "web",
+    "shared"
+  ],
+  "scripts": {
+    "dev": "concurrently -n api,web -c blue,green \"npm run dev --workspace=api\" \"npm run dev --workspace=web\"",
+    "dev:api": "npm run dev --workspace=api",
+    "dev:web": "npm run dev --workspace=web",
+    "test": "npm test --workspace=api",
+    "test:web": "npm test --workspace=web",
+    "build": "npm install && npm run build --workspace=web"
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.0"
+  },
+  "engines": {
+    "node": "22.x"
+  }
+}

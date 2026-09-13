@@ -1,0 +1,326 @@
+{
+  "course": {
+    "code": "ACCT 201",
+    "name": "Introduction to Financial Accounting",
+    "instructor_name": "Dr. Samantha Schachner",
+    "instructor_email": "sschachn@sbu.edu",
+    "grading_scheme": "points",
+    "points_total_stated": 1000,
+    "needs_review": false,
+    "review_reason": null
+  },
+  "grading_components": [
+    { "title": "Exams", "parent_title": null, "weight_percent": null, "points_possible": 300, "expected_count": 3, "count_best_n": null, "drop_lowest_n": null },
+    { "title": "Exam 1", "parent_title": "Exams", "weight_percent": null, "points_possible": 100, "expected_count": null, "count_best_n": null, "drop_lowest_n": null },
+    { "title": "Exam 2", "parent_title": "Exams", "weight_percent": null, "points_possible": 100, "expected_count": null, "count_best_n": null, "drop_lowest_n": null },
+    { "title": "Exam 3", "parent_title": "Exams", "weight_percent": null, "points_possible": 100, "expected_count": null, "count_best_n": null, "drop_lowest_n": null },
+    { "title": "Final Exam", "parent_title": null, "weight_percent": null, "points_possible": 200, "expected_count": null, "count_best_n": null, "drop_lowest_n": null },
+    { "title": "Homework", "parent_title": null, "weight_percent": null, "points_possible": 200, "expected_count": null, "count_best_n": null, "drop_lowest_n": 1 },
+    { "title": "SmartBook", "parent_title": null, "weight_percent": null, "points_possible": 100, "expected_count": 11, "count_best_n": 10, "drop_lowest_n": 1 },
+    { "title": "Lab Attendance Option", "parent_title": null, "weight_percent": null, "points_possible": 100, "expected_count": null, "count_best_n": null, "drop_lowest_n": null },
+    { "title": "Class Attendance", "parent_title": null, "weight_percent": null, "points_possible": 100, "expected_count": null, "count_best_n": null, "drop_lowest_n": null }
+  ],
+  "syllabus_items": [
+    {
+      "title": "Chapter 1 SmartBook",
+      "item_kind": "reading",
+      "due_start": "2026-08-31", "due_end": "2026-09-04", "due_time": null,
+      "available_from": null, "available_until": null,
+      "date_precision": "range",
+      "source_text": "Week 1 Aug 31- Sept 4 | Syllabus & Registering for Connect A Framework for Financial Accounting [Ch. 1] | Chapter 1 SmartBook",
+      "source_section": "schedule_table",
+      "points_possible": 10, "is_recurring": false, "expected_count": null
+    },
+    {
+      "title": "Chapter 1 Homework",
+      "item_kind": "homework",
+      "due_start": "2026-09-14", "due_end": "2026-09-18", "due_time": null,
+      "available_from": null, "available_until": null,
+      "date_precision": "range",
+      "source_text": "Chapter 1 Homework (30 pt) Chapter 2 SmartBook",
+      "source_section": "schedule_table",
+      "points_possible": 30, "is_recurring": false, "expected_count": null
+    },
+    {
+      "title": "Chapter 2 SmartBook",
+      "item_kind": "reading",
+      "due_start": "2026-09-14", "due_end": "2026-09-18", "due_time": null,
+      "available_from": null, "available_until": null,
+      "date_precision": "range",
+      "source_text": "Chapter 1 Homework (30 pt) Chapter 2 SmartBook",
+      "source_section": "schedule_table",
+      "points_possible": 10, "is_recurring": false, "expected_count": null
+    },
+    {
+      "title": "Chapter 2 Homework",
+      "item_kind": "homework",
+      "due_start": "2026-09-28", "due_end": "2026-10-02", "due_time": null,
+      "available_from": null, "available_until": null,
+      "date_precision": "range",
+      "source_text": "Chapter 2 Homework (40 pt) Chapter 3 SmartBook",
+      "source_section": "schedule_table",
+      "points_possible": 40, "is_recurring": false, "expected_count": null
+    },
+    {
+      "title": "Chapter 3 SmartBook",
+      "item_kind": "reading",
+      "due_start": "2026-09-28", "due_end": "2026-10-02", "due_time": null,
+      "available_from": null, "available_until": null,
+      "date_precision": "range",
+      "source_text": "Chapter 2 Homework (40 pt) Chapter 3 SmartBook",
+      "source_section": "schedule_table",
+      "points_possible": 10, "is_recurring": false, "expected_count": null
+    },
+    {
+      "title": "Exam 1",
+      "item_kind": "exam",
+      "due_start": "2026-10-05", "due_end": "2026-10-09", "due_time": null,
+      "available_from": null, "available_until": null,
+      "date_precision": "range",
+      "source_text": "Week 6 Oct 5 – Oct 9 | The Accounting Cycle [Ch. 2 and Ch. 3] | Exam 1",
+      "source_section": "schedule_table",
+      "points_possible": 100, "is_recurring": false, "expected_count": null
+    },
+    {
+      "title": "Midterm Break",
+      "item_kind": "break",
+      "due_start": "2026-10-12", "due_end": "2026-10-13", "due_time": null,
+      "available_from": null, "available_until": null,
+      "date_precision": "range",
+      "source_text": "Oct 12 – Oct 13 | MIDTERM BREAK",
+      "source_section": "schedule_table",
+      "points_possible": null, "is_recurring": false, "expected_count": null
+    },
+    {
+      "title": "Chapter 3 Homework",
+      "item_kind": "homework",
+      "due_start": "2026-10-14", "due_end": "2026-10-16", "due_time": null,
+      "available_from": null, "available_until": null,
+      "date_precision": "range",
+      "source_text": "Chapter 3 Homework (40 pt) Chapter 4 SmartBook",
+      "source_section": "schedule_table",
+      "points_possible": 40, "is_recurring": false, "expected_count": null
+    },
+    {
+      "title": "Chapter 4 SmartBook",
+      "item_kind": "reading",
+      "due_start": "2026-10-14", "due_end": "2026-10-16", "due_time": null,
+      "available_from": null, "available_until": null,
+      "date_precision": "range",
+      "source_text": "Chapter 3 Homework (40 pt) Chapter 4 SmartBook",
+      "source_section": "schedule_table",
+      "points_possible": 10, "is_recurring": false, "expected_count": null
+    },
+    {
+      "title": "Chapter 4 Homework",
+      "item_kind": "homework",
+      "due_start": "2026-10-26", "due_end": "2026-10-30", "due_time": null,
+      "available_from": null, "available_until": null,
+      "date_precision": "range",
+      "source_text": "Chapter 4 Homework (20 pt) Chapter 5 SmartBook",
+      "source_section": "schedule_table",
+      "points_possible": 20, "is_recurring": false, "expected_count": null
+    },
+    {
+      "title": "Chapter 5 SmartBook",
+      "item_kind": "reading",
+      "due_start": "2026-10-26", "due_end": "2026-10-30", "due_time": null,
+      "available_from": null, "available_until": null,
+      "date_precision": "range",
+      "source_text": "Chapter 4 Homework (20 pt) Chapter 5 SmartBook",
+      "source_section": "schedule_table",
+      "points_possible": 10, "is_recurring": false, "expected_count": null
+    },
+    {
+      "title": "Chapter 5 Homework",
+      "item_kind": "homework",
+      "due_start": "2026-11-02", "due_end": "2026-11-06", "due_time": null,
+      "available_from": null, "available_until": null,
+      "date_precision": "range",
+      "source_text": "Chapter 5 Homework (20 pt) Chapter 6 SmartBook Exam 2",
+      "source_section": "schedule_table",
+      "points_possible": 20, "is_recurring": false, "expected_count": null
+    },
+    {
+      "title": "Chapter 6 SmartBook",
+      "item_kind": "reading",
+      "due_start": "2026-11-02", "due_end": "2026-11-06", "due_time": null,
+      "available_from": null, "available_until": null,
+      "date_precision": "range",
+      "source_text": "Chapter 5 Homework (20 pt) Chapter 6 SmartBook Exam 2",
+      "source_section": "schedule_table",
+      "points_possible": 10, "is_recurring": false, "expected_count": null
+    },
+    {
+      "title": "Exam 2",
+      "item_kind": "exam",
+      "due_start": "2026-11-02", "due_end": "2026-11-06", "due_time": null,
+      "available_from": null, "available_until": null,
+      "date_precision": "range",
+      "source_text": "Chapter 5 Homework (20 pt) Chapter 6 SmartBook Exam 2",
+      "source_section": "schedule_table",
+      "points_possible": 100, "is_recurring": false, "expected_count": null
+    },
+    {
+      "title": "Chapter 6 Homework",
+      "item_kind": "homework",
+      "due_start": "2026-11-09", "due_end": "2026-11-13", "due_time": null,
+      "available_from": null, "available_until": null,
+      "date_precision": "range",
+      "source_text": "Chapter 6 Homework (20 pt) Chapter 7 SmartBook",
+      "source_section": "schedule_table",
+      "points_possible": 20, "is_recurring": false, "expected_count": null
+    },
+    {
+      "title": "Chapter 7 SmartBook",
+      "item_kind": "reading",
+      "due_start": "2026-11-09", "due_end": "2026-11-13", "due_time": null,
+      "available_from": null, "available_until": null,
+      "date_precision": "range",
+      "source_text": "Chapter 6 Homework (20 pt) Chapter 7 SmartBook",
+      "source_section": "schedule_table",
+      "points_possible": 10, "is_recurring": false, "expected_count": null
+    },
+    {
+      "title": "Chapter 7 Homework",
+      "item_kind": "homework",
+      "due_start": "2026-11-16", "due_end": "2026-11-20", "due_time": null,
+      "available_from": null, "available_until": null,
+      "date_precision": "range",
+      "source_text": "Chapter 7 Homework (10 pt) Chapter 8 SmartBook",
+      "source_section": "schedule_table",
+      "points_possible": 10, "is_recurring": false, "expected_count": null
+    },
+    {
+      "title": "Chapter 8 SmartBook",
+      "item_kind": "reading",
+      "due_start": "2026-11-16", "due_end": "2026-11-20", "due_time": null,
+      "available_from": null, "available_until": null,
+      "date_precision": "range",
+      "source_text": "Chapter 7 Homework (10 pt) Chapter 8 SmartBook",
+      "source_section": "schedule_table",
+      "points_possible": 10, "is_recurring": false, "expected_count": null
+    },
+    {
+      "title": "Chapter 8 Homework",
+      "item_kind": "homework",
+      "due_start": "2026-11-23", "due_end": "2026-11-24", "due_time": null,
+      "available_from": null, "available_until": null,
+      "date_precision": "range",
+      "source_text": "Chapter 8 Homework (10 pt) Chapter 9 SmartBook",
+      "source_section": "schedule_table",
+      "points_possible": 10, "is_recurring": false, "expected_count": null
+    },
+    {
+      "title": "Chapter 9 SmartBook",
+      "item_kind": "reading",
+      "due_start": "2026-11-23", "due_end": "2026-11-24", "due_time": null,
+      "available_from": null, "available_until": null,
+      "date_precision": "range",
+      "source_text": "Chapter 8 Homework (10 pt) Chapter 9 SmartBook",
+      "source_section": "schedule_table",
+      "points_possible": 10, "is_recurring": false, "expected_count": null
+    },
+    {
+      "title": "Thanksgiving Break",
+      "item_kind": "break",
+      "due_start": "2026-11-25", "due_end": "2026-11-29", "due_time": null,
+      "available_from": null, "available_until": null,
+      "date_precision": "range",
+      "source_text": "Nov 25 – Nov 29 | THANKSGIVING BREAK",
+      "source_section": "schedule_table",
+      "points_possible": null, "is_recurring": false, "expected_count": null
+    },
+    {
+      "title": "Chapter 9 Homework",
+      "item_kind": "homework",
+      "due_start": "2026-11-30", "due_end": "2026-12-04", "due_time": null,
+      "available_from": null, "available_until": null,
+      "date_precision": "range",
+      "source_text": "Chapter 9 Homework (10 pt) Chapter 10 SmartBook Exam 3",
+      "source_section": "schedule_table",
+      "points_possible": 10, "is_recurring": false, "expected_count": null
+    },
+    {
+      "title": "Chapter 10 SmartBook",
+      "item_kind": "reading",
+      "due_start": "2026-11-30", "due_end": "2026-12-04", "due_time": null,
+      "available_from": null, "available_until": null,
+      "date_precision": "range",
+      "source_text": "Chapter 9 Homework (10 pt) Chapter 10 SmartBook Exam 3",
+      "source_section": "schedule_table",
+      "points_possible": 10, "is_recurring": false, "expected_count": null
+    },
+    {
+      "title": "Exam 3",
+      "item_kind": "exam",
+      "due_start": "2026-11-30", "due_end": "2026-12-04", "due_time": null,
+      "available_from": null, "available_until": null,
+      "date_precision": "range",
+      "source_text": "Chapter 9 Homework (10 pt) Chapter 10 SmartBook Exam 3",
+      "source_section": "schedule_table",
+      "points_possible": 100, "is_recurring": false, "expected_count": null
+    },
+    {
+      "title": "Chapter 10 Homework",
+      "item_kind": "homework",
+      "due_start": "2026-12-07", "due_end": "2026-12-11", "due_time": null,
+      "available_from": null, "available_until": null,
+      "date_precision": "range",
+      "source_text": "Chapter 10 Homework (10 pt) Chapter 12 SmartBook Chapter 12 Homework (10 pt)",
+      "source_section": "schedule_table",
+      "points_possible": 10, "is_recurring": false, "expected_count": null
+    },
+    {
+      "title": "Chapter 12 SmartBook",
+      "item_kind": "reading",
+      "due_start": "2026-12-07", "due_end": "2026-12-11", "due_time": null,
+      "available_from": null, "available_until": null,
+      "date_precision": "range",
+      "source_text": "Chapter 10 Homework (10 pt) Chapter 12 SmartBook Chapter 12 Homework (10 pt)",
+      "source_section": "schedule_table",
+      "points_possible": 10, "is_recurring": false, "expected_count": null
+    },
+    {
+      "title": "Chapter 12 Homework",
+      "item_kind": "homework",
+      "due_start": "2026-12-07", "due_end": "2026-12-11", "due_time": null,
+      "available_from": null, "available_until": null,
+      "date_precision": "range",
+      "source_text": "Chapter 10 Homework (10 pt) Chapter 12 SmartBook Chapter 12 Homework (10 pt)",
+      "source_section": "schedule_table",
+      "points_possible": 10, "is_recurring": false, "expected_count": null
+    },
+    {
+      "title": "Final Exam",
+      "item_kind": "final_exam",
+      "due_start": null, "due_end": null, "due_time": null,
+      "available_from": null, "available_until": null,
+      "date_precision": "tba",
+      "source_text": "FINALS WEEK | FINAL EXAM TBD",
+      "source_section": "schedule_table",
+      "points_possible": 200, "is_recurring": false, "expected_count": null
+    },
+    {
+      "title": "Lab Attendance",
+      "item_kind": "lab_session",
+      "due_start": null, "due_end": null, "due_time": null,
+      "available_from": null, "available_until": null,
+      "date_precision": "none",
+      "source_text": "Labs are extra sessions given during the week intended to provide you extra help with the material and to prepare you for that week’s homework and/or test.",
+      "source_section": "body_prose",
+      "points_possible": 100, "is_recurring": true, "expected_count": null
+    },
+    {
+      "title": "Class Attendance",
+      "item_kind": "participation",
+      "due_start": null, "due_end": null, "due_time": null,
+      "available_from": null, "available_until": null,
+      "date_precision": "none",
+      "source_text": "Class Attendance  100",
+      "source_section": "body_prose",
+      "points_possible": 100, "is_recurring": true, "expected_count": null
+    }
+  ],
+  "term_mismatch": false
+}

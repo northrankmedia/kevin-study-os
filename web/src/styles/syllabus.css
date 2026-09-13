@@ -1,0 +1,738 @@
+/*
+ * Aesthetic direction: "academic ledger." Kevin Study OS's syllabus review
+ * screen should feel like a well-kept course planner, not a generic SaaS
+ * dashboard — warm paper background, a display serif for section titles,
+ * and a monospace face for every date/tag/metadata value (the same way a
+ * printed schedule sets its dates apart from its prose). One dominant ink
+ * color, one amber accent reserved for "this needs your attention," and a
+ * separate calm teal reserved for the term-mismatch banner so it never
+ * reads as an error state.
+ *
+ * The memorable structural element: month groups run down a left-hand
+ * "ledger rail" (a vertical rule with the month name breaking through it),
+ * echoing the margin of a paper planner rather than a flat table.
+ */
+
+:root {
+  --ink: #1b2a4a;
+  --ink-soft: #4a5678;
+  --paper: #faf8f3;
+  --paper-raised: #ffffff;
+  --paper-line: #e4ddce;
+  --accent: #a8730f;
+  --accent-ink: #6b4a0b;
+  --accent-soft: #f7ead0;
+  --accent-border: #e0b872;
+  --mismatch: #2f6f6f;
+  --mismatch-soft: #e6f2f1;
+  --mismatch-border: #a9cfcd;
+  --error: #a3372f;
+  --error-soft: #fbe9e6;
+  --muted: #7a7362;
+
+  --font-display: 'Newsreader', 'Iowan Old Style', serif;
+  --font-mono: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
+  --font-body: 'Work Sans', 'Segoe UI', sans-serif;
+
+  --radius: 10px;
+  --dur: 160ms;
+}
+
+.syl-page {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding: 1rem 1rem 6rem;
+}
+
+.syl-page * {
+  box-sizing: border-box;
+}
+
+.syl-header {
+  margin-bottom: 1.25rem;
+}
+
+.syl-header h1 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.5rem;
+  margin: 0 0 0.15rem;
+  letter-spacing: -0.01em;
+}
+
+.syl-header p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+/* ---------------------------------------------------------------- */
+/* Course picker                                                     */
+/* ---------------------------------------------------------------- */
+
+.syl-course-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.syl-course-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  width: 100%;
+  text-align: left;
+  padding: 0.75rem 0.9rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--paper-line);
+  background: var(--paper-raised);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--ink);
+  cursor: pointer;
+  transition: border-color var(--dur), box-shadow var(--dur);
+}
+
+.syl-course-btn:hover {
+  border-color: var(--ink-soft);
+}
+
+.syl-course-btn:focus-visible {
+  outline: 2px solid var(--mismatch);
+  outline-offset: 1px;
+}
+
+.syl-course-btn[data-selected='true'] {
+  border-color: var(--ink);
+  box-shadow: inset 0 0 0 1px var(--ink);
+}
+
+.syl-course-btn .syl-course-code {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.syl-course-flag {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--accent-ink);
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-border);
+  border-radius: 999px;
+  padding: 0.15rem 0.5rem;
+  white-space: nowrap;
+}
+
+.syl-change-course {
+  margin-bottom: 1rem;
+}
+
+/* ---------------------------------------------------------------- */
+/* Upload control                                                     */
+/* ---------------------------------------------------------------- */
+
+.syl-upload {
+  border: 2px dashed var(--paper-line);
+  border-radius: var(--radius);
+  background: var(--paper-raised);
+  padding: 1.5rem 1rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  transition: border-color var(--dur), background var(--dur);
+}
+
+.syl-upload[data-dragging='true'] {
+  border-color: var(--mismatch);
+  background: var(--mismatch-soft);
+}
+
+.syl-upload[data-disabled='true'] {
+  opacity: 0.6;
+}
+
+.syl-upload-title {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin: 0 0 0.35rem;
+}
+
+.syl-upload-hint {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin: 0 0 1rem;
+}
+
+.syl-upload-label {
+  display: inline-block;
+  padding: 0.6rem 1.1rem;
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: transform var(--dur), background var(--dur);
+}
+
+.syl-upload-label:hover {
+  background: var(--ink-soft);
+}
+
+.syl-upload-label:active {
+  transform: scale(0.97);
+}
+
+.syl-upload-label input[type='file'] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+.syl-upload-desktop-hint {
+  display: none;
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-top: 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .syl-upload-desktop-hint {
+    display: block;
+  }
+}
+
+.syl-progress {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+}
+
+.syl-progress-dot {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: var(--mismatch);
+  animation: syl-pulse 1.1s ease-in-out infinite;
+}
+
+.syl-progress-dot:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.syl-progress-dot:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+@keyframes syl-pulse {
+  0%, 80%, 100% { opacity: 0.25; transform: scale(0.85); }
+  40% { opacity: 1; transform: scale(1); }
+}
+
+.syl-error-banner {
+  border: 1px solid var(--error);
+  background: var(--error-soft);
+  color: var(--error);
+  border-radius: var(--radius);
+  padding: 0.85rem 1rem;
+  font-size: 0.9rem;
+  margin-bottom: 1.25rem;
+}
+
+.syl-error-banner button {
+  margin-top: 0.5rem;
+  background: none;
+  border: 1px solid var(--error);
+  color: var(--error);
+  border-radius: 999px;
+  padding: 0.35rem 0.9rem;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+
+/* ---------------------------------------------------------------- */
+/* Term mismatch banner — deliberately calm, not an error look        */
+/* ---------------------------------------------------------------- */
+
+.syl-mismatch-banner {
+  border: 1px solid var(--mismatch-border);
+  background: var(--mismatch-soft);
+  border-radius: var(--radius);
+  padding: 1rem 1.1rem;
+  margin-bottom: 1.5rem;
+}
+
+.syl-mismatch-banner h2 {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin: 0 0 0.4rem;
+  color: var(--mismatch);
+}
+
+.syl-mismatch-banner p {
+  margin: 0 0 0.5rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+.syl-mismatch-banner p:last-child {
+  margin-bottom: 0;
+}
+
+.syl-mismatch-tag {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--mismatch);
+  border: 1px solid var(--mismatch-border);
+  border-radius: 999px;
+  padding: 0.15rem 0.55rem;
+  margin-bottom: 0.6rem;
+}
+
+/* ---------------------------------------------------------------- */
+/* Extraction-failed notice (genuine error/empty state)               */
+/* ---------------------------------------------------------------- */
+
+.syl-empty-banner {
+  border: 1px solid var(--paper-line);
+  background: var(--paper-raised);
+  border-radius: var(--radius);
+  padding: 1.5rem 1rem;
+  text-align: center;
+  color: var(--ink-soft);
+  margin-bottom: 1.5rem;
+}
+
+.syl-empty-banner h2 {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  margin: 0 0 0.4rem;
+}
+
+.syl-empty-banner p {
+  font-size: 0.88rem;
+  margin: 0 0 0.75rem;
+}
+
+/* ---------------------------------------------------------------- */
+/* Grading summary                                                    */
+/* ---------------------------------------------------------------- */
+
+.syl-grading {
+  margin-bottom: 1.75rem;
+}
+
+.syl-grading h2 {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin: 0 0 0.6rem;
+}
+
+.syl-grading-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.syl-grading-chip {
+  display: flex;
+  align-items: baseline;
+  gap: 0.35rem;
+  border: 1px solid var(--paper-line);
+  background: var(--paper-raised);
+  border-radius: 999px;
+  padding: 0.3rem 0.7rem;
+  font-size: 0.82rem;
+}
+
+.syl-grading-chip strong {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--ink);
+}
+
+.syl-grading-chip span {
+  color: var(--muted);
+}
+
+/* ---------------------------------------------------------------- */
+/* Month groups — the ledger rail                                     */
+/* ---------------------------------------------------------------- */
+
+.syl-group {
+  position: relative;
+  padding-left: 1rem;
+  border-left: 2px solid var(--paper-line);
+  margin-bottom: 1.75rem;
+}
+
+.syl-group[data-no-date='true'] {
+  border-left-color: var(--accent-border);
+}
+
+.syl-group-label {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--ink-soft);
+  margin: 0 0 0.75rem -1.05rem;
+  padding-left: 1.05rem;
+  position: relative;
+}
+
+.syl-group-label::before {
+  content: '';
+  position: absolute;
+  left: -0.32rem;
+  top: 0.35rem;
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  background: var(--paper);
+  border: 2px solid var(--ink-soft);
+}
+
+.syl-group[data-no-date='true'] .syl-group-label {
+  color: var(--accent-ink);
+}
+
+.syl-group[data-no-date='true'] .syl-group-label::before {
+  border-color: var(--accent);
+}
+
+.syl-group-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+/* ---------------------------------------------------------------- */
+/* Item row                                                            */
+/* ---------------------------------------------------------------- */
+
+.syl-item {
+  border: 1px solid var(--paper-line);
+  background: var(--paper-raised);
+  border-radius: var(--radius);
+  padding: 0.75rem 0.85rem;
+  transition: box-shadow var(--dur);
+}
+
+.syl-item[data-attention='true'] {
+  border-color: var(--accent-border);
+  border-left: 4px solid var(--accent);
+  background: var(--accent-soft);
+}
+
+.syl-item[data-editing='true'] {
+  border-color: var(--ink);
+  box-shadow: 0 0 0 1px var(--ink);
+}
+
+.syl-item-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.6rem;
+}
+
+.syl-item-main {
+  min-width: 0;
+  flex: 1;
+}
+
+.syl-item-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0 0 0.3rem;
+  word-break: break-word;
+}
+
+.syl-item-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+}
+
+.syl-kind-tag {
+  border: 1px solid var(--ink-soft);
+  color: var(--ink-soft);
+  border-radius: 4px;
+  padding: 0.08rem 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.syl-attention-tag {
+  color: var(--accent-ink);
+  border: 1px solid var(--accent-border);
+  background: var(--paper-raised);
+  border-radius: 4px;
+  padding: 0.08rem 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.syl-edited-tag {
+  color: var(--mismatch);
+  border: 1px solid var(--mismatch-border);
+  border-radius: 4px;
+  padding: 0.08rem 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.syl-date-badge {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  white-space: nowrap;
+  padding: 0.2rem 0.55rem;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.syl-date-badge[data-variant='exact'] {
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--ink);
+  font-weight: 600;
+}
+
+.syl-date-badge[data-variant='range'] {
+  color: var(--ink-soft);
+  background: var(--paper);
+  border: 1px dashed var(--ink-soft);
+  font-style: italic;
+}
+
+.syl-date-badge[data-variant='tba'] {
+  color: var(--muted);
+  background: var(--paper);
+  border: 1px dashed var(--paper-line);
+}
+
+.syl-date-badge[data-variant='external_ref'] {
+  color: var(--mismatch);
+  background: var(--paper);
+  border: 1px solid var(--mismatch-border);
+}
+
+.syl-date-badge[data-variant='none'] {
+  color: var(--muted);
+  background: none;
+  border: 1px solid transparent;
+}
+
+.syl-date-badge[data-variant='mismatch-empty'] {
+  color: var(--accent-ink);
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-border);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.syl-item-actions {
+  display: flex;
+  gap: 0.4rem;
+  margin-top: 0.5rem;
+}
+
+.syl-btn {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  border-radius: 999px;
+  padding: 0.3rem 0.75rem;
+  cursor: pointer;
+  border: 1px solid var(--paper-line);
+  background: var(--paper-raised);
+  color: var(--ink);
+}
+
+.syl-btn:hover {
+  border-color: var(--ink-soft);
+}
+
+.syl-btn:focus-visible,
+.syl-course-btn:focus-visible,
+.syl-date-badge:focus-visible,
+.syl-upload-label:focus-within {
+  outline: 2px solid var(--mismatch);
+  outline-offset: 1px;
+}
+
+.syl-btn[data-variant='primary'] {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+}
+
+.syl-btn[data-variant='primary']:hover {
+  background: var(--ink-soft);
+}
+
+.syl-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.syl-source-toggle {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.78rem;
+  color: var(--mismatch);
+  text-decoration: underline;
+  cursor: pointer;
+  margin-top: 0.45rem;
+}
+
+.syl-source-text {
+  margin-top: 0.5rem;
+  padding: 0.55rem 0.7rem;
+  background: var(--paper);
+  border-left: 3px solid var(--paper-line);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+  white-space: pre-wrap;
+  border-radius: 4px;
+}
+
+.syl-source-section {
+  display: block;
+  margin-top: 0.35rem;
+  font-size: 0.7rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+/* ---------------------------------------------------------------- */
+/* Inline edit form                                                    */
+/* ---------------------------------------------------------------- */
+
+.syl-edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  margin-top: 0.5rem;
+}
+
+.syl-edit-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.syl-edit-row label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--muted);
+}
+
+.syl-edit-row input,
+.syl-edit-row select {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  padding: 0.4rem 0.55rem;
+  border-radius: 6px;
+  border: 1px solid var(--paper-line);
+  background: var(--paper-raised);
+  color: var(--ink);
+  width: 100%;
+}
+
+.syl-edit-row input:focus,
+.syl-edit-row select:focus {
+  outline: 2px solid var(--mismatch);
+  outline-offset: 1px;
+}
+
+.syl-edit-dates {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.syl-edit-dates .syl-edit-row {
+  flex: 1;
+  min-width: 8rem;
+}
+
+.syl-edit-error {
+  font-size: 0.8rem;
+  color: var(--error);
+  margin: 0;
+}
+
+/* ---------------------------------------------------------------- */
+/* Confirm bar                                                        */
+/* ---------------------------------------------------------------- */
+
+.syl-confirm-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--paper-raised);
+  border-top: 1px solid var(--paper-line);
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  box-shadow: 0 -4px 12px rgba(27, 42, 74, 0.08);
+}
+
+.syl-confirm-note {
+  font-size: 0.78rem;
+  color: var(--muted);
+  margin: 0;
+}
+
+.syl-confirm-bar .syl-btn {
+  white-space: nowrap;
+}
+
+@media (min-width: 640px) {
+  .syl-page {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 6rem;
+  }
+
+  .syl-confirm-bar {
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 720px;
+    border-radius: var(--radius) var(--radius) 0 0;
+    border: 1px solid var(--paper-line);
+    border-bottom: none;
+  }
+}

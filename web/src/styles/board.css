@@ -1,0 +1,894 @@
+/*
+ * Aesthetic direction: same "academic ledger" family as the syllabus review
+ * screen (warm paper, a display serif for headings, monospace for every
+ * date/tag), extended into a two-page planner spread for the board itself.
+ * The memorable structural element: Upcoming and Completed sit as two
+ * facing pages of an open notebook, divided by a visible center spine
+ * (a soft shadow + rule), with each day's heading breaking through the
+ * page's top edge like a torn calendar tab. "Today" is never just another
+ * row: it gets its own ink-filled tab and, on a day with nothing due, a
+ * dashed marker still holds its place in the flow so the app never goes
+ * quiet about what day it is.
+ */
+
+:root {
+  --brd-ink: #1b2a4a;
+  --brd-ink-soft: #4a5678;
+  --brd-paper: #faf8f3;
+  --brd-paper-raised: #ffffff;
+  --brd-paper-line: #e4ddce;
+  --brd-accent: #a8730f;
+  --brd-accent-ink: #6b4a0b;
+  --brd-accent-soft: #f7ead0;
+  --brd-accent-border: #e0b872;
+  --brd-mismatch: #2f6f6f;
+  --brd-mismatch-soft: #e6f2f1;
+  --brd-mismatch-border: #a9cfcd;
+  --brd-error: #a3372f;
+  --brd-error-soft: #fbe9e6;
+  --brd-muted: #7a7362;
+
+  --brd-font-display: 'Newsreader', 'Iowan Old Style', serif;
+  --brd-font-mono: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
+  --brd-font-body: 'Work Sans', 'Segoe UI', sans-serif;
+
+  --brd-radius: 10px;
+  --brd-dur: 160ms;
+}
+
+.brd-page {
+  /* Full-bleed root: this is the whole browser viewport, edge to edge, at
+     every screen size — no max-width here. Solid paper color plus a faint
+     dot-grid (graph-paper ledger) so the entire window reads as a designed
+     surface. Previously `.brd-page` itself carried `max-width: 1180px` at
+     desktop widths, which capped the WHOLE app — background included — in
+     a boxed column with plain unstyled space on either side on any wide
+     monitor. That cap now lives on `.brd-inner` below, which constrains
+     only the readable content, not the page's own background. */
+  background-color: var(--brd-paper);
+  background-image: radial-gradient(var(--brd-paper-line) 1px, transparent 1px);
+  background-size: 22px 22px;
+  color: var(--brd-ink);
+  font-family: var(--brd-font-body);
+  width: 100%;
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding: 1rem 1rem 3rem;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* The readable content column — header, filters, board — centered inside
+   the full-bleed `.brd-page`. This is the ONLY thing capped to a max-width;
+   the page background around it is never boxed in. */
+.brd-inner {
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+/* Wraps everything below the header/filter/banners: loading skeleton, error
+   banner, the empty-state hero, or the two-column spread. `flex: 1` lets it
+   claim the rest of the viewport so an empty board can center its hero in
+   the remaining space instead of leaving it as dead air below a short,
+   top-anchored block. */
+.brd-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.brd-page * {
+  box-sizing: border-box;
+}
+
+.brd-loading-line {
+  color: var(--brd-muted);
+  font-size: 0.9rem;
+}
+
+/* ---------------------------------------------------------------- */
+/* Header                                                             */
+/* ---------------------------------------------------------------- */
+
+.brd-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.1rem;
+}
+
+.brd-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.brd-header-actions .brd-btn {
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+
+.brd-header h1 {
+  font-family: var(--brd-font-display);
+  font-weight: 600;
+  font-size: 1.6rem;
+  margin: 0 0 0.15rem;
+  letter-spacing: -0.01em;
+}
+
+.brd-subtitle {
+  margin: 0;
+  color: var(--brd-muted);
+  font-size: 0.88rem;
+}
+
+.brd-btn {
+  font-family: var(--brd-font-body);
+  font-size: 0.78rem;
+  border-radius: 999px;
+  padding: 0.35rem 0.8rem;
+  cursor: pointer;
+  border: 1px solid var(--brd-paper-line);
+  background: var(--brd-paper-raised);
+  color: var(--brd-ink);
+  white-space: nowrap;
+  transition: border-color var(--brd-dur), background var(--brd-dur);
+}
+
+.brd-btn:hover {
+  border-color: var(--brd-ink-soft);
+}
+
+.brd-btn:focus-visible {
+  outline: 2px solid var(--brd-mismatch);
+  outline-offset: 1px;
+}
+
+.brd-btn-primary {
+  background: var(--brd-ink);
+  border-color: var(--brd-ink);
+  color: var(--brd-paper);
+  font-weight: 600;
+  padding: 0.55rem 1.1rem;
+  font-size: 0.85rem;
+}
+
+.brd-btn-primary:hover {
+  background: var(--brd-ink-soft);
+  border-color: var(--brd-ink-soft);
+}
+
+/* ---------------------------------------------------------------- */
+/* Course filter                                                      */
+/* ---------------------------------------------------------------- */
+
+.brd-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-bottom: 1.1rem;
+}
+
+.brd-filter-chip-wrap {
+  display: inline-flex;
+  align-items: stretch;
+  border-radius: 999px;
+  border: 1px solid var(--brd-paper-line);
+  background: var(--brd-paper-raised);
+  overflow: hidden;
+  transition: border-color var(--brd-dur), box-shadow var(--brd-dur);
+}
+
+.brd-filter-chip-wrap[data-selected='true'] {
+  border-color: var(--brd-ink);
+  box-shadow: inset 0 0 0 1px var(--brd-ink);
+}
+
+.brd-filter-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--brd-font-mono);
+  font-size: 0.76rem;
+  border-radius: 999px;
+  padding: 0.32rem 0.7rem;
+  border: none;
+  background: none;
+  color: var(--brd-ink-soft);
+  cursor: pointer;
+  transition: color var(--brd-dur);
+}
+
+.brd-filter-chip-wrap .brd-filter-chip {
+  border-radius: 999px 0 0 999px;
+}
+
+.brd-filter-view {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  font-family: var(--brd-font-body);
+  font-size: 1.05rem;
+  line-height: 1;
+  color: var(--brd-muted);
+  border-left: 1px solid var(--brd-paper-line);
+  text-decoration: none;
+  transition: color var(--brd-dur), background var(--brd-dur);
+}
+
+.brd-filter-view:hover,
+.brd-filter-view:focus-visible {
+  color: var(--brd-mismatch);
+  background: var(--brd-mismatch-soft);
+}
+
+.brd-filter-view:focus-visible {
+  outline: 2px solid var(--brd-mismatch);
+  outline-offset: -2px;
+}
+
+.brd-filter-chip:hover {
+  border-color: var(--brd-ink-soft);
+}
+
+.brd-filter-chip:focus-visible {
+  outline: 2px solid var(--brd-mismatch);
+  outline-offset: 1px;
+}
+
+.brd-filter-chip[data-selected='true'] {
+  border-color: var(--brd-ink);
+  box-shadow: inset 0 0 0 1px var(--brd-ink);
+  color: var(--brd-ink);
+  font-weight: 600;
+}
+
+.brd-filter-all {
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  font-size: 0.7rem;
+  border: 1px solid var(--brd-paper-line);
+  background: var(--brd-paper-raised);
+}
+
+.brd-filter-all:hover {
+  border-color: var(--brd-ink-soft);
+}
+
+.brd-filter-all[data-selected='true'] {
+  border-color: var(--brd-ink);
+  box-shadow: inset 0 0 0 1px var(--brd-ink);
+  color: var(--brd-ink);
+  font-weight: 600;
+}
+
+.brd-filter-dot {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.brd-filter-flag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  background: var(--brd-accent-soft);
+  color: var(--brd-accent-ink);
+  font-size: 0.68rem;
+  font-weight: 700;
+}
+
+.brd-filter-skeleton {
+  width: 4.5rem;
+  height: 1.7rem;
+  background: linear-gradient(90deg, var(--brd-paper-line) 25%, var(--brd-paper-raised) 50%, var(--brd-paper-line) 75%);
+  background-size: 200% 100%;
+  animation: brd-shimmer 1.3s ease-in-out infinite;
+  border: none;
+}
+
+.brd-filter-error,
+.brd-filter-empty {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.85rem;
+  color: var(--brd-muted);
+  margin-bottom: 1.1rem;
+}
+
+.brd-filter-error {
+  color: var(--brd-error);
+}
+
+/* ---------------------------------------------------------------- */
+/* Needs review                                                       */
+/* ---------------------------------------------------------------- */
+
+.brd-needs-review {
+  border: 1px solid var(--brd-mismatch-border);
+  background: var(--brd-mismatch-soft);
+  border-radius: var(--brd-radius);
+  padding: 1rem 1.1rem;
+  margin-bottom: 1.25rem;
+}
+
+.brd-needs-review h2 {
+  font-family: var(--brd-font-display);
+  font-size: 1.02rem;
+  font-weight: 600;
+  margin: 0 0 0.4rem;
+  color: var(--brd-mismatch);
+}
+
+.brd-needs-review-intro {
+  margin: 0 0 0.75rem;
+  font-size: 0.86rem;
+  line-height: 1.5;
+  color: var(--brd-ink);
+}
+
+.brd-needs-review-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.brd-needs-review-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.4rem 0.55rem;
+  background: var(--brd-paper-raised);
+  border: 1px solid var(--brd-mismatch-border);
+  border-radius: 8px;
+  padding: 0.55rem 0.7rem;
+}
+
+.brd-needs-review-course {
+  font-family: var(--brd-font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--brd-mismatch);
+}
+
+.brd-needs-review-title {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.brd-needs-review-kind {
+  font-family: var(--brd-font-mono);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--brd-muted);
+  border: 1px solid var(--brd-paper-line);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+
+.brd-needs-review-hint {
+  flex-basis: 100%;
+  font-size: 0.8rem;
+  color: var(--brd-ink-soft);
+}
+
+/* ---------------------------------------------------------------- */
+/* Toggle error toast                                                 */
+/* ---------------------------------------------------------------- */
+
+.brd-toggle-error {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  border: 1px solid var(--brd-error);
+  background: var(--brd-error-soft);
+  color: var(--brd-error);
+  border-radius: var(--brd-radius);
+  padding: 0.65rem 0.85rem;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.brd-toggle-error button {
+  background: none;
+  border: 1px solid var(--brd-error);
+  color: var(--brd-error);
+  border-radius: 999px;
+  padding: 0.2rem 0.65rem;
+  font-size: 0.75rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+/* ---------------------------------------------------------------- */
+/* Mobile tabs (hidden once the two-column spread has room)           */
+/* ---------------------------------------------------------------- */
+
+.brd-tabs {
+  display: flex;
+  gap: 0.4rem;
+  margin-bottom: 0.9rem;
+  border-bottom: 1px solid var(--brd-paper-line);
+}
+
+.brd-tabs button {
+  flex: 1;
+  font-family: var(--brd-font-display);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--brd-muted);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 0.55rem 0.4rem;
+  cursor: pointer;
+  transition: color var(--brd-dur), border-color var(--brd-dur);
+}
+
+.brd-tabs button[data-active='true'] {
+  color: var(--brd-ink);
+  border-bottom-color: var(--brd-ink);
+}
+
+.brd-tabs button:focus-visible {
+  outline: 2px solid var(--brd-mismatch);
+  outline-offset: -2px;
+}
+
+/* ---------------------------------------------------------------- */
+/* Empty-board hero (replaces the two-column spread entirely)          */
+/* ---------------------------------------------------------------- */
+
+.brd-hero {
+  /* Full width of the content column (same width as the header/filter row
+     above it) and a real chunk of the viewport's height — not a small
+     centered card floating alone in the middle of the page. The text block
+     inside stays narrow and centered for readability; the panel itself
+     fills the screen. */
+  width: 100%;
+  flex: 1;
+  min-height: 420px;
+  margin: 0;
+  padding: 3rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.9rem;
+  text-align: center;
+  background: var(--brd-paper-raised);
+  border: 1px solid var(--brd-paper-line);
+  border-radius: 18px;
+  box-shadow: 0 1px 2px rgba(27, 42, 74, 0.04), 0 20px 40px -20px rgba(27, 42, 74, 0.18);
+}
+
+.brd-hero-icon {
+  width: 3.75rem;
+  height: 3.75rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--brd-accent-soft);
+  border: 1px solid var(--brd-accent-border);
+  color: var(--brd-accent-ink);
+  margin-bottom: 0.15rem;
+}
+
+.brd-hero h2 {
+  font-family: var(--brd-font-display);
+  font-weight: 600;
+  font-size: 1.6rem;
+  margin: 0;
+  color: var(--brd-ink);
+}
+
+.brd-hero p {
+  margin: 0;
+  max-width: 460px;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--brd-ink-soft);
+}
+
+.brd-hero .brd-btn-primary {
+  margin-top: 0.3rem;
+  text-decoration: none;
+}
+
+/* ---------------------------------------------------------------- */
+/* Two-column spread                                                   */
+/* ---------------------------------------------------------------- */
+
+.brd-columns {
+  display: block;
+}
+
+.brd-column[data-visible-mobile='false'] {
+  display: none;
+}
+
+.brd-column-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.6rem;
+  margin-bottom: 0.7rem;
+}
+
+.brd-column-head h2 {
+  font-family: var(--brd-font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.brd-jump {
+  background: none;
+  border: none;
+  font-family: var(--brd-font-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--brd-mismatch);
+  cursor: pointer;
+  padding: 0.15rem 0.3rem;
+  text-decoration: underline;
+}
+
+.brd-jump:focus-visible {
+  outline: 2px solid var(--brd-mismatch);
+  outline-offset: 1px;
+}
+
+.brd-column-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1.3rem;
+  min-width: 0;
+}
+
+.brd-empty {
+  color: var(--brd-muted);
+  font-size: 0.88rem;
+  border: 1px dashed var(--brd-paper-line);
+  border-radius: var(--brd-radius);
+  padding: 1.25rem 1rem;
+  text-align: center;
+  margin: 0;
+}
+
+.brd-column-error {
+  border: 1px solid var(--brd-error);
+  background: var(--brd-error-soft);
+  color: var(--brd-error);
+  border-radius: var(--brd-radius);
+  padding: 0.85rem 1rem;
+  font-size: 0.88rem;
+}
+
+.brd-column-error p {
+  margin: 0 0 0.5rem;
+}
+
+.brd-column-error button {
+  background: none;
+  border: 1px solid var(--brd-error);
+  color: var(--brd-error);
+  border-radius: 999px;
+  padding: 0.3rem 0.8rem;
+  font-size: 0.78rem;
+  cursor: pointer;
+}
+
+/* ---------------------------------------------------------------- */
+/* Skeleton loading                                                    */
+/* ---------------------------------------------------------------- */
+
+.brd-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.brd-skeleton-row {
+  height: 3.4rem;
+  border-radius: var(--brd-radius);
+  background: linear-gradient(90deg, var(--brd-paper-line) 25%, var(--brd-paper-raised) 50%, var(--brd-paper-line) 75%);
+  background-size: 200% 100%;
+  animation: brd-shimmer 1.3s ease-in-out infinite;
+}
+
+@keyframes brd-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ---------------------------------------------------------------- */
+/* Today marker (synthetic, when no group actually lands on today)     */
+/* ---------------------------------------------------------------- */
+
+.brd-today-marker {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: -0.5rem 0;
+}
+
+.brd-today-marker::before,
+.brd-today-marker::after {
+  content: '';
+  flex: 1;
+  height: 0;
+  border-top: 1px dashed var(--brd-accent-border);
+}
+
+.brd-today-marker span {
+  font-family: var(--brd-font-mono);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--brd-accent-ink);
+  background: var(--brd-accent-soft);
+  border: 1px solid var(--brd-accent-border);
+  border-radius: 999px;
+  padding: 0.15rem 0.6rem;
+  white-space: nowrap;
+}
+
+/* ---------------------------------------------------------------- */
+/* Day group                                                           */
+/* ---------------------------------------------------------------- */
+
+.brd-day {
+  min-width: 0;
+}
+
+.brd-day-heading {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-bottom: 0.55rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid var(--brd-paper-line);
+}
+
+.brd-day-primary {
+  font-family: var(--brd-font-display);
+  font-size: 1.02rem;
+  font-weight: 600;
+  color: var(--brd-ink);
+}
+
+.brd-day[data-today='true'] .brd-day-primary {
+  color: var(--brd-paper);
+  background: var(--brd-ink);
+  border-radius: 6px;
+  padding: 0.08rem 0.5rem;
+}
+
+.brd-day[data-no-date='true'] .brd-day-primary {
+  color: var(--brd-accent-ink);
+  font-style: italic;
+}
+
+.brd-day-secondary {
+  font-family: var(--brd-font-mono);
+  font-size: 0.75rem;
+  color: var(--brd-muted);
+}
+
+.brd-day-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* ---------------------------------------------------------------- */
+/* Item card                                                           */
+/* ---------------------------------------------------------------- */
+
+.brd-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  border: 1px solid var(--brd-paper-line);
+  border-left: 4px solid var(--course-color, var(--brd-muted));
+  background: var(--brd-paper-raised);
+  border-radius: var(--brd-radius);
+  padding: 0.6rem 0.75rem;
+  transition: box-shadow var(--brd-dur), opacity var(--brd-dur);
+  min-width: 0;
+}
+
+.brd-item[data-completed='true'] {
+  opacity: 0.62;
+}
+
+.brd-item-check {
+  flex-shrink: 0;
+  width: 1.3rem;
+  height: 1.3rem;
+  border-radius: 50%;
+  border: 2px solid var(--brd-ink-soft);
+  background: var(--brd-paper-raised);
+  color: var(--brd-paper);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  margin-top: 0.05rem;
+  transition: background var(--brd-dur), border-color var(--brd-dur), transform var(--brd-dur);
+}
+
+.brd-item-check:hover {
+  border-color: var(--brd-ink);
+  transform: scale(1.06);
+}
+
+.brd-item-check:focus-visible {
+  outline: 2px solid var(--brd-mismatch);
+  outline-offset: 2px;
+}
+
+.brd-item[data-completed='true'] .brd-item-check {
+  background: var(--brd-ink);
+  border-color: var(--brd-ink);
+}
+
+.brd-item-check[data-pending='true'] {
+  opacity: 0.5;
+  cursor: wait;
+}
+
+.brd-item-check:disabled {
+  cursor: wait;
+}
+
+.brd-item-body {
+  min-width: 0;
+  flex: 1;
+}
+
+.brd-item-title {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--brd-ink);
+  margin: 0 0 0.3rem;
+  word-break: break-word;
+}
+
+.brd-item[data-completed='true'] .brd-item-title {
+  text-decoration: line-through;
+  text-decoration-color: var(--brd-muted);
+}
+
+.brd-item-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--brd-font-mono);
+  font-size: 0.7rem;
+}
+
+.brd-item-course {
+  font-weight: 700;
+}
+
+.brd-item-kind {
+  color: var(--brd-ink-soft);
+  border: 1px solid var(--brd-paper-line);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.brd-item-when {
+  color: var(--brd-muted);
+}
+
+.brd-item-when[data-variant='exact'] {
+  color: var(--brd-ink);
+  font-weight: 600;
+}
+
+.brd-item-when[data-variant='range'] {
+  color: var(--brd-ink-soft);
+  font-style: italic;
+}
+
+.brd-item-when[data-variant='tba'] {
+  color: var(--brd-muted);
+}
+
+.brd-item-when[data-variant='external_ref'] {
+  color: var(--brd-mismatch);
+}
+
+/* ---------------------------------------------------------------- */
+/* Desktop: two-page spread with a visible spine, tabs hidden          */
+/* ---------------------------------------------------------------- */
+
+@media (min-width: 860px) {
+  .brd-page {
+    padding: 2rem 2rem 4rem;
+  }
+
+  .brd-inner {
+    max-width: 1180px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .brd-tabs {
+    display: none;
+  }
+
+  .brd-column[data-visible-mobile='false'] {
+    display: flex;
+  }
+
+  .brd-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    position: relative;
+  }
+
+  .brd-columns::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 1px;
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      var(--brd-paper-line) 8%,
+      var(--brd-paper-line) 92%,
+      transparent
+    );
+    box-shadow: 0 0 16px 4px rgba(27, 42, 74, 0.05);
+  }
+
+  .brd-column {
+    display: flex;
+    flex-direction: column;
+    padding: 0 1.75rem;
+  }
+
+  .brd-column:first-child {
+    padding-left: 0;
+  }
+
+  .brd-column:last-child {
+    padding-right: 0;
+  }
+}

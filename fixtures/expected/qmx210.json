@@ -1,0 +1,62 @@
+{
+  "course": {
+    "code": "QMX 210",
+    "name": "Quantitative Applications for Business Students",
+    "instructor_name": "Evelyn Bysiek",
+    "instructor_email": "eabysiek@sbu.edu",
+    "grading_scheme": "percent",
+    "points_total_stated": null,
+    "needs_review": true,
+    "review_reason": "term_mismatch"
+  },
+  "grading_components": [
+    { "title": "Examinations", "parent_title": null, "weight_percent": 30, "points_possible": null, "expected_count": 2, "count_best_n": null, "drop_lowest_n": null },
+    { "title": "Homework", "parent_title": null, "weight_percent": 20, "points_possible": null, "expected_count": null, "count_best_n": null, "drop_lowest_n": null },
+    { "title": "Quizzes", "parent_title": null, "weight_percent": 15, "points_possible": null, "expected_count": 5, "count_best_n": 4, "drop_lowest_n": 1 },
+    { "title": "Attendance and Preparation", "parent_title": null, "weight_percent": 15, "points_possible": null, "expected_count": null, "count_best_n": null, "drop_lowest_n": null },
+    { "title": "Final Exam", "parent_title": null, "weight_percent": 20, "points_possible": null, "expected_count": null, "count_best_n": null, "drop_lowest_n": null }
+  ],
+  "syllabus_items": [
+    {
+      "title": "Examination 1",
+      "item_kind": "exam",
+      "due_start": null, "due_end": null, "due_time": null,
+      "available_from": null, "available_until": null,
+      "date_precision": "none",
+      "source_text": "2/18 \nExamination 1",
+      "source_section": "schedule_table",
+      "points_possible": null, "is_recurring": false, "expected_count": null
+    },
+    {
+      "title": "Examination 2",
+      "item_kind": "exam",
+      "due_start": null, "due_end": null, "due_time": null,
+      "available_from": null, "available_until": null,
+      "date_precision": "none",
+      "source_text": "3/30 \nExamination II",
+      "source_section": "schedule_table",
+      "points_possible": null, "is_recurring": false, "expected_count": null
+    },
+    {
+      "title": "Final Exam",
+      "item_kind": "final_exam",
+      "due_start": null, "due_end": null, "due_time": null,
+      "available_from": null, "available_until": null,
+      "date_precision": "tba",
+      "source_text": "The date of the final exam is TBA.",
+      "source_section": "body_prose",
+      "points_possible": null, "is_recurring": false, "expected_count": null
+    },
+    {
+      "title": "Homework",
+      "item_kind": "homework",
+      "due_start": null, "due_end": null, "due_time": null,
+      "available_from": null, "available_until": null,
+      "date_precision": "none",
+      "source_text": "At the end of almost every class, a homework assignment will be given.",
+      "source_section": "body_prose",
+      "points_possible": null, "is_recurring": true, "expected_count": null
+    }
+  ],
+  "term_mismatch": true
+}

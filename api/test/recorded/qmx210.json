@@ -1,0 +1,137 @@
+{
+  "termLabel": "Fall 2026",
+  "termStart": "2026-08-31",
+  "termEnd": "2026-12-18",
+  "passA": {
+    "course": {
+      "code": "QMX 210",
+      "name": "Quantitative Applications for Business Students",
+      "instructor_name": "Evelyn Bysiek",
+      "instructor_email": "eabysiek@sbu.edu",
+      "grading_scheme": "percent",
+      "points_total_stated": null,
+      "grading_scale_unit": null,
+      "grading_scale_cutoffs": null
+    },
+    "term_detected": "Spring 2026",
+    "grading_components": [
+      {
+        "title": "Examinations",
+        "parent_title": null,
+        "weight_percent": 30,
+        "points_possible": null,
+        "expected_count": 2,
+        "count_best_n": null,
+        "drop_lowest_n": null
+      },
+      {
+        "title": "Homework",
+        "parent_title": null,
+        "weight_percent": 20,
+        "points_possible": null,
+        "expected_count": null,
+        "count_best_n": null,
+        "drop_lowest_n": null
+      },
+      {
+        "title": "Quizzes",
+        "parent_title": null,
+        "weight_percent": 15,
+        "points_possible": null,
+        "expected_count": 5,
+        "count_best_n": 4,
+        "drop_lowest_n": 1
+      },
+      {
+        "title": "Attendance and Preparation",
+        "parent_title": null,
+        "weight_percent": 15,
+        "points_possible": null,
+        "expected_count": null,
+        "count_best_n": null,
+        "drop_lowest_n": null
+      },
+      {
+        "title": "Final Exam",
+        "parent_title": null,
+        "weight_percent": 20,
+        "points_possible": null,
+        "expected_count": null,
+        "count_best_n": null,
+        "drop_lowest_n": null
+      }
+    ]
+  },
+  "passB": {
+    "items": [
+      {
+        "title": "Examination 1",
+        "item_kind": "exam",
+        "due_start": "2026-02-18",
+        "due_end": "2026-02-18",
+        "due_time": null,
+        "available_from_local": null,
+        "available_until_local": null,
+        "date_precision": "exact",
+        "source_text": "2/18 \nExamination 1",
+        "source_section": "schedule_table",
+        "points_possible": null,
+        "is_recurring": false,
+        "expected_count": null,
+        "grading_component_title": null,
+        "confidence": 0.65
+      },
+      {
+        "title": "Examination 2",
+        "item_kind": "exam",
+        "due_start": "2026-03-30",
+        "due_end": "2026-03-30",
+        "due_time": null,
+        "available_from_local": null,
+        "available_until_local": null,
+        "date_precision": "exact",
+        "source_text": "3/30 \nExamination II",
+        "source_section": "schedule_table",
+        "points_possible": null,
+        "is_recurring": false,
+        "expected_count": null,
+        "grading_component_title": null,
+        "confidence": 0.65
+      },
+      {
+        "title": "Final Exam",
+        "item_kind": "final_exam",
+        "due_start": null,
+        "due_end": null,
+        "due_time": null,
+        "available_from_local": null,
+        "available_until_local": null,
+        "date_precision": "tba",
+        "source_text": "The date of the final exam is TBA.",
+        "source_section": "body_prose",
+        "points_possible": null,
+        "is_recurring": false,
+        "expected_count": null,
+        "grading_component_title": null,
+        "confidence": 0.65
+      },
+      {
+        "title": "Homework",
+        "item_kind": "homework",
+        "due_start": null,
+        "due_end": null,
+        "due_time": null,
+        "available_from_local": null,
+        "available_until_local": null,
+        "date_precision": "none",
+        "source_text": "At the end of almost every class, a homework assignment will be given.",
+        "source_section": "body_prose",
+        "points_possible": null,
+        "is_recurring": true,
+        "expected_count": null,
+        "grading_component_title": null,
+        "confidence": 0.65
+      }
+    ]
+  }
+}
