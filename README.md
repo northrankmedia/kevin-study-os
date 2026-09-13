@@ -46,7 +46,9 @@ Visit `http://localhost:3000` — you should see "Kevin Study OS" and the API he
 - Request/response schemas for every endpoint.
 - `ENDPOINTS` — the frozen list of every route, method, and its documented response schemas per status code.
 
-**Why an ES module that both a CommonJS app and an ESM app can consume:** `shared/package.json` sets `"type": "module"`. Node 22.12+ supports synchronous `require()` of an ES module (as long as it has no top-level `await`, which this one doesn't), so `api/` (CommonJS, matching the existing `docPrep.js` style) does `const { CourseSchema } = require('../../../shared/contract.js')`, while `web/` (Vite, native ESM) does `import { CourseSchema } from '../../shared/contract.js'`. One file, no duplication, no build step.
+**Why one plain CommonJS file works for both a CommonJS app and an ESM app:** `shared/contract.js` is plain CommonJS (`module.exports = { ... }`) — `api/` (CommonJS, matching the existing `docPrep.js` style) does `const { CourseSchema } = require('../../../shared/contract.js')`, while `web/` (Vite, native ESM) does `import { CourseSchema } from '../../shared/contract.js'`, which Vite/esbuild's CJS interop resolves fine. One file, no duplication, no build step.
+
+(An earlier version of this file set `shared/package.json`'s `"type": "module"` and relied on Node 22.12+'s synchronous `require()`-of-an-ES-module support instead, to let `api/` consume the exact same ESM syntax `web/` does. That worked in local dev and in every test in this repo, but broke in production: Vercel's deployed Function runtime throws `ERR_REQUIRE_ESM` on that require() regardless of the configured Node.js version — its stack traces show a custom Rust-based runtime that doesn't implement the feature. Plain CommonJS has no such platform-specific gap.)
 
 ### Endpoint list (frozen — see `shared/contract.js` for exact schemas)
 

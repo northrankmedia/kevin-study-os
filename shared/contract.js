@@ -7,10 +7,26 @@
  * doesn't exist as a column, and do not rename one relative to its column.
  *
  * Consumed as:
- *   - CommonJS, from `api/` (Node 22.12+ supports synchronous `require()` of
- *     an ES module as long as the module has no top-level await, which this
- *     one doesn't): `const { CourseSchema } = require('../../../shared/contract.js');`
+ *   - CommonJS, from `api/`: `const { CourseSchema } = require('../../../shared/contract.js');`
  *   - Native ESM, from `web/` (Vite): `import { CourseSchema } from '../../shared/contract.js';`
+ *     Vite/esbuild's CJS interop handles importing named exports from a
+ *     CommonJS `module.exports = { ... }` object fine — no change needed on
+ *     the web/ side.
+ *
+ * Plain CommonJS (not `"type": "module"` + Node's require()-of-ESM trick,
+ * which this file used until it broke Vercel's production deployment):
+ * `shared/package.json` originally set `"type": "module"` specifically so
+ * this one file could be `require()`'d from api/ (Node 22.12+ supports
+ * synchronous require() of an ES module with no top-level await) AND
+ * `import`'d natively from web/ — avoiding any duplication. That worked
+ * everywhere it was tested (local dev, `npm test`) but broke in Vercel's
+ * actual deployed Function runtime: its stack traces show a custom Rust-based
+ * Node runtime (`/opt/rust/nodejs.js`) that throws `ERR_REQUIRE_ESM` on this
+ * require(), regardless of the dashboard's configured Node.js Version (24.x
+ * exhibited the exact same failure as older versions) — Node's own
+ * `require(esm)` feature evidently isn't implemented there. Plain CommonJS
+ * has no such platform-specific gap: both sides consume the exact same file,
+ * just via each side's own native module system's normal interop.
  *
  * IMPORTANT: This endpoint list is frozen as of Task 2. Auth, syllabus
  * extraction, notes, calendar board, and the AI course-profile pipeline all
@@ -19,7 +35,7 @@
  * this file staying stable.
  */
 
-import { z } from 'zod';
+const { z } = require('zod');
 
 // ============================================================================
 // Shared primitives
@@ -567,7 +583,7 @@ const ENDPOINTS = Object.freeze([
   },
 ]);
 
-export {
+module.exports = {
   // primitives
   uuidSchema,
   dateOnlySchema,
